@@ -1,24 +1,22 @@
-import { Colors } from "@/constants/Colors";
-import { Flame, Swords } from "lucide-react-native";
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Colors } from '@/constants/Colors';
+import { Flame, Swords } from 'lucide-react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 
 type HeaderProps = {
-  style?: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
 };
 
 export default function Header({ style }: HeaderProps) {
-  return (
-    <View style={[styles.container, style]}>
-      <View style={styles.headerContainer}>
-        <Swords color={Colors.primary} size={60} />
-        <Flame color={Colors.primary} size={60} />
-      </View>
-      <Text style={styles.headerTitle}>Urban KO</Text>
-      <Text style={styles.headerSubtitle}>
-        Trouve ton adversaire et met le KO
-      </Text>
-    </View>
-  );
+    return (
+        <View style={StyleSheet.compose(styles.container, style)}>
+            <View style={styles.headerContainer}>
+                <Swords color={Colors.primary} size={60} />
+                <Flame color={Colors.primary} size={60} />
+            </View>
+            <Text style={styles.headerTitle}>Urban KO</Text>
+            <Text style={styles.headerSubtitle}>Trouve ton adversaire et met le KO</Text>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
