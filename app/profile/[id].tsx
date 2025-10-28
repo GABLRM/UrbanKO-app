@@ -2,10 +2,10 @@ import { useLocalSearchParams } from 'expo-router';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
-import { User } from '@/app/type/user';
 import UserInformation from '@/app/features/profile/UserInformation';
 import UserBattleInformation from '@/app/features/profile/UserBattleInformation';
 import UserSubInformation from '@/app/features/profile/UserSubInformation';
+import User from '@/app/type/user';
 
 export default function Id() {
     const [user, setUser] = useState<User | undefined>(undefined);
