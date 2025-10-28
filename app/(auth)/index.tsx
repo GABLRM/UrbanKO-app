@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import { Colors } from '@/constants/Colors';
@@ -70,7 +71,7 @@ export default function Index() {
 
                     {/* TODO: Modifier avec le component de Audran */}
                     <View style={styles.innerContainer}>
-                        <View style={styles.card}>
+                        <Card>
                             <Controller
                                 control={control}
                                 name="email"
@@ -116,7 +117,7 @@ export default function Index() {
                                 onPress={handleSubmit(onSubmit)}
                                 isDisabled={isSubmitting}
                             />
-                        </View>
+                        </Card>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
