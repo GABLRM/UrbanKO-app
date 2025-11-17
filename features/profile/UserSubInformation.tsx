@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
-import Chip from '@/app/component/Chip';
+import Chip from '@/components/Chip';
 
 type userSubInformationProps = {
     gender: string;

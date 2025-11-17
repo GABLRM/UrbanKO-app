@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
-import { useGetMe } from '@/app/hooks/useGetMe';
+import { useGetMe } from '@/hooks/useGetMe';
 import { useEffect } from 'react';
-import { useUser } from '@/app/context/userContext';
+import { useUser } from '@/contexts/userContext';
 
 export default function LandingPage() {
     const { status, data, error, isFetching } = useGetMe('token');

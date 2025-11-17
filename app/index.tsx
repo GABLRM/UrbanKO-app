@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import LandingPage from '@/app/component/LandingPage';
+import LandingPage from '@/components/LandingPage';
 
 const queryClient = new QueryClient({});
 
