@@ -2,52 +2,67 @@ import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { Colors } from '@/constants/Colors';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { z } from 'zod';
+import {Colors} from '@/constants/Colors';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useRouter} from 'expo-router';
+import {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {type AuthData, authSchema} from '@/schemas/authSchema';
+import {useLogin, useSignup} from '@/hooks/useAuth';
 
 export default function Index() {
     const [isLogin, setIsLogin] = useState(true);
-
     const router = useRouter();
 
-    const schema = z.object({
-        email: z
-            .string({ required_error: "L'email est requis" })
-            .email({ message: 'Adresse e-mail invalide' }),
-        password: z
-            .string({ required_error: 'Le mot de passe est requis' })
-            .min(6, { message: 'Le mot de passe doit contenir au moins 6 caractères' }),
-    });
-
-    type FormData = z.infer<typeof schema>;
+    const login = useLogin();
+    const signup = useSignup();
 
     const {
         control,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<FormData>({
-        resolver: zodResolver(schema),
+        formState: {errors},
+    } = useForm<AuthData>({
+        resolver: zodResolver(authSchema),
     });
 
-    const onSubmit = (data: FormData) => {
-        console.log(data);
-        router.push('/onboarding');
+    const onSubmit = (data: AuthData) => {
+        if (isLogin) {
+            // Connexion
+            login.mutate(data, {
+                onSuccess: () => {
+                    console.log("Connexion réussie !", data);
+                },
+                onError: (error) => {
+                    console.error("Erreur lors de la connexion", error);
+                },
+            });
+        } else {
+            // Inscription
+            signup.mutate(data, {
+                onSuccess: () => {
+                    console.log("Inscription réussie !", data);
+                    router.replace('/onboarding');
+                },
+                onError: (error) => {
+                    console.error("Erreur lors de l'inscription", error);
+                },
+            });
+        }
     };
+
+    // Désactiver le bouton pendant la mutation
+    const isLoading = login.isPending || signup.isPending;
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+            <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+                    contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
                 >
-                    <Header />
+                    <Header/>
 
                     <View style={styles.switchContainer}>
                         <Pressable
@@ -69,53 +84,68 @@ export default function Index() {
                         </Pressable>
                     </View>
 
-                    {/* TODO: Modifier avec le component de Audran */}
                     <View style={styles.innerContainer}>
                         <Card>
                             <Controller
                                 control={control}
                                 name="email"
-                                render={({ field: { onChange, onBlur, value } }) => (
+                                render={({field: {onChange, onBlur, value}}) => (
                                     <Input
                                         label="Email"
                                         placeholder="ton.email@example.com"
                                         textContentType="emailAddress"
                                         keyboardType="email-address"
+                                        autoCapitalize="none"
                                         onChangeText={onChange}
                                         onBlur={onBlur}
-                                        value={value}
+                                        value={value?.toLowerCase()}
                                         error={errors.email?.message}
+                                        editable={!isLoading}
                                     />
                                 )}
                             />
                             <Controller
                                 control={control}
                                 name="password"
-                                render={({ field: { onChange, onBlur, value } }) => (
+                                render={({field: {onChange, onBlur, value}}) => (
                                     <Input
                                         label="Mot de passe"
                                         placeholder="••••••••••••"
-                                        style={{ marginTop: 30 }}
+                                        style={{marginTop: 10}}
                                         secureTextEntry={true}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
                                         value={value}
                                         error={errors.password?.message}
+                                        editable={!isLoading}
                                     />
                                 )}
                             />
+
+                            {/* Afficher les erreurs de l'API */}
+                            {login.error && (
+                                <Text style={styles.errorText}>
+                                    {login.error.message}
+                                </Text>
+                            )}
+                            {signup.error && (
+                                <Text style={styles.errorText}>
+                                    {signup.error.message}
+                                </Text>
+                            )}
+
                             <Button
                                 title={
                                     isLogin
-                                        ? isSubmitting
+                                        ? isLoading
                                             ? '🥊 En cours...'
                                             : '🥊 Se connecter'
-                                        : isSubmitting
-                                        ? '💪 En cours...'
-                                        : "💪 S'inscrire"
+                                        : isLoading
+                                            ? '💪 En cours...'
+                                            : "💪 S'inscrire"
                                 }
                                 onPress={handleSubmit(onSubmit)}
-                                isDisabled={isSubmitting}
+                                isDisabled={isLoading}
                             />
                         </Card>
                     </View>
@@ -170,5 +200,11 @@ const styles = StyleSheet.create({
     },
     activeText: {
         color: 'white',
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 10,
+        marginBottom: 10,
+        textAlign: 'center',
     },
 });
