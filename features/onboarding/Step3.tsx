@@ -31,16 +31,16 @@ export default function Step3({ onSubmit }: Step3Props) {
             control={control}
             name="gender"
             render={({ field: { onChange, value }, fieldState }) => (
-                <Input
-                  label="Genre"
-                  placeholder="Ex: Masculin"
-                  value={value}
-                  onChangeText={(text) => {
-                    onChange(text);
-                    if (fieldState.error) trigger("gender");
-                  }}
-                  error={fieldState.error?.message as string | undefined}
-                />
+              <Input
+                label="Genre"
+                placeholder="Ex: Masculin"
+                value={value}
+                onChangeText={(text) => {
+                  onChange(text);
+                  if (fieldState.error) trigger("gender");
+                }}
+                error={fieldState.error?.message as string | undefined}
+              />
             )}
           />
 
