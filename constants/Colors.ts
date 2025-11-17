@@ -5,4 +5,5 @@ export const Colors = {
     secondary: '#a0a0ab',
     inputBackground: '#2d2d33',
     card: '#252529',
+    white: '#ffffff',
 };
