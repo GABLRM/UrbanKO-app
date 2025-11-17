@@ -20,24 +20,24 @@ export default function Header({ style }: HeaderProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  headerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  headerTitle: {
-    color: Colors.primary,
-    fontSize: 40,
-    marginTop: 5,
-    fontWeight: "800",
-  },
-  headerSubtitle: {
-    color: Colors.secondary,
-    fontSize: 17,
-    fontWeight: "600",
-    marginTop: 10,
-  },
+    container: {
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    headerTitle: {
+        color: Colors.primary,
+        fontSize: 40,
+        marginTop: 5,
+        fontWeight: '800',
+    },
+    headerSubtitle: {
+        color: Colors.secondary,
+        fontSize: 17,
+        fontWeight: '600',
+        marginTop: 10,
+    },
 });

@@ -65,7 +65,7 @@ export default function Input({
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        flex: 1,
     },
     label: {
         color: 'white',

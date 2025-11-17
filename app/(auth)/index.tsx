@@ -2,15 +2,15 @@ import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import {Colors} from '@/constants/Colors';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useRouter} from 'expo-router';
-import {useState} from 'react';
-import {Controller, useForm} from 'react-hook-form';
-import {KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {type AuthData, authSchema} from '@/schemas/authSchema';
-import {useLogin, useSignup} from '@/hooks/useAuth';
+import { Colors } from '@/constants/Colors';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { type AuthData, authSchema } from '@/schemas/authSchema';
+import { useLogin, useSignup } from '@/hooks/useAuth';
 
 export default function Index() {
     const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +22,7 @@ export default function Index() {
     const {
         control,
         handleSubmit,
-        formState: {errors},
+        formState: { errors },
     } = useForm<AuthData>({
         resolver: zodResolver(authSchema),
     });
@@ -32,17 +32,17 @@ export default function Index() {
             // Connexion
             login.mutate(data, {
                 onSuccess: () => {
-                    console.log("Connexion réussie !", data);
+                    console.log('Connexion réussie !', data);
                 },
                 onError: (error) => {
-                    console.error("Erreur lors de la connexion", error);
+                    console.error('Erreur lors de la connexion', error);
                 },
             });
         } else {
             // Inscription
             signup.mutate(data, {
                 onSuccess: () => {
-                    console.log("Inscription réussie !", data);
+                    console.log('Inscription réussie !', data);
                     router.replace('/onboarding');
                 },
                 onError: (error) => {
@@ -57,12 +57,12 @@ export default function Index() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+            <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+                    contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
                 >
-                    <Header/>
+                    <Header />
 
                     <View style={styles.switchContainer}>
                         <Pressable
@@ -89,7 +89,7 @@ export default function Index() {
                             <Controller
                                 control={control}
                                 name="email"
-                                render={({field: {onChange, onBlur, value}}) => (
+                                render={({ field: { onChange, onBlur, value } }) => (
                                     <Input
                                         label="Email"
                                         placeholder="ton.email@example.com"
@@ -107,11 +107,11 @@ export default function Index() {
                             <Controller
                                 control={control}
                                 name="password"
-                                render={({field: {onChange, onBlur, value}}) => (
+                                render={({ field: { onChange, onBlur, value } }) => (
                                     <Input
                                         label="Mot de passe"
                                         placeholder="••••••••••••"
-                                        style={{marginTop: 10}}
+                                        style={{ marginTop: 10 }}
                                         secureTextEntry={true}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
@@ -124,14 +124,10 @@ export default function Index() {
 
                             {/* Afficher les erreurs de l'API */}
                             {login.error && (
-                                <Text style={styles.errorText}>
-                                    {login.error.message}
-                                </Text>
+                                <Text style={styles.errorText}>{login.error.message}</Text>
                             )}
                             {signup.error && (
-                                <Text style={styles.errorText}>
-                                    {signup.error.message}
-                                </Text>
+                                <Text style={styles.errorText}>{signup.error.message}</Text>
                             )}
 
                             <Button
@@ -141,8 +137,8 @@ export default function Index() {
                                             ? '🥊 En cours...'
                                             : '🥊 Se connecter'
                                         : isLoading
-                                            ? '💪 En cours...'
-                                            : "💪 S'inscrire"
+                                          ? '💪 En cours...'
+                                          : "💪 S'inscrire"
                                 }
                                 onPress={handleSubmit(onSubmit)}
                                 isDisabled={isLoading}

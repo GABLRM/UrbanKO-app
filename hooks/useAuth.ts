@@ -1,6 +1,6 @@
-import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {authService} from '@/services/authService';
-import {AuthData, UserResponse} from '@/schemas/authSchema';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { authService } from '@/services/authService';
+import { AuthData, UserResponse } from '@/schemas/authSchema';
 import * as SecureStore from 'expo-secure-store';
 
 export function useLogin() {

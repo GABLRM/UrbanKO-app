@@ -1,4 +1,4 @@
-import {AuthData, UserResponse, userResponseSchema} from "@/schemas/authSchema";
+import { AuthData, UserResponse, userResponseSchema } from '@/schemas/authSchema';
 
 const API_URL = 'http://localhost:3000';
 
