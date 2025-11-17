@@ -1,10 +1,8 @@
 import { AuthData, UserResponse, userResponseSchema } from '@/schemas/authSchema';
 
-const API_URL = 'http://localhost:3000';
-
 export const authService = {
     login: async (data: AuthData): Promise<UserResponse> => {
-        const response = await fetch(`${API_URL}/users/login`, {
+        const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,7 +20,7 @@ export const authService = {
     },
 
     signup: async (data: AuthData): Promise<UserResponse> => {
-        const response = await fetch(`${API_URL}/users`, {
+        const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
