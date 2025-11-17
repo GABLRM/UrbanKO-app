@@ -11,6 +11,9 @@ export default function Id() {
     const [user, setUser] = useState<User | undefined>(undefined);
     const { id }: { id: string } = useLocalSearchParams();
 
+    //todo: get user info with useContext if self user
+    // const { user } = useUser()
+
     const getUser = (): User => {
         return {
             _id: '1',
