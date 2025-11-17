@@ -61,12 +61,12 @@ export default function OnboardingScreen() {
 
         patchMeMutation.mutate(payload, {
             onSuccess: () => {
-                router.push("/")
+                router.push('/');
             },
             onError: (error) => {
-                console.error("Failed to update user:", error);
+                console.error('Failed to update user:', error);
             },
-        })
+        });
     };
 
     const steps = [
