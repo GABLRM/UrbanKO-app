@@ -1,4 +1,5 @@
 import { AuthData, UserResponse, userResponseSchema } from '@/schemas/authSchema';
+import User from '@/type/user';
 
 export const authService = {
     login: async (data: AuthData): Promise<UserResponse> => {
@@ -35,5 +36,23 @@ export const authService = {
 
         const json = await response.json();
         return userResponseSchema.parse(json);
+    },
+
+    getMe: async (token: string): Promise<User> => {
+        const response = await fetch(`${API_URL}/users/me`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Erreur lors de la récupération de l'utilisateur");
+        }
+
+        const json = await response.json();
+        return json as User;
     },
 };

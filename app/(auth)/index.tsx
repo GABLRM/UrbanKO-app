@@ -11,10 +11,12 @@ import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { type AuthData, authSchema } from '@/schemas/authSchema';
 import { useLogin, useSignup } from '@/hooks/useAuth';
+import { useAuth } from '@/contexts/AuthenticationContext';
 
 export default function Index() {
     const [isLogin, setIsLogin] = useState(true);
     const router = useRouter();
+    const { refreshUser } = useAuth();
 
     const login = useLogin();
     const signup = useSignup();
@@ -31,8 +33,10 @@ export default function Index() {
         if (isLogin) {
             // Connexion
             login.mutate(data, {
-                onSuccess: () => {
+                onSuccess: async () => {
                     console.log('Connexion réussie !', data);
+                    await refreshUser();
+                    router.replace('/(app)/(tabs)');
                 },
                 onError: (error) => {
                     console.error('Erreur lors de la connexion', error);
@@ -41,9 +45,10 @@ export default function Index() {
         } else {
             // Inscription
             signup.mutate(data, {
-                onSuccess: () => {
+                onSuccess: async () => {
                     console.log('Inscription réussie !', data);
-                    router.replace('/onboarding');
+                    await refreshUser();
+                    router.replace('/(auth)/onboarding');
                 },
                 onError: (error) => {
                     console.error("Erreur lors de l'inscription", error);
