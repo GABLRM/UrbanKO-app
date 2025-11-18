@@ -48,7 +48,9 @@ export default function Id() {
             <View style={styles.header} />
             <Image
                 source={
-                    user?.image ? { uri: user.image } : require('../../assets/images/favicon.png')
+                    user?.image
+                        ? { uri: user.image }
+                        : require('../../../../assets/images/favicon.png')
                 }
                 style={styles.profilePicture}
             />
