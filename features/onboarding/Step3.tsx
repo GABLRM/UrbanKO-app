@@ -1,9 +1,12 @@
+import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Input from '@/components/Input';
+import { Select } from '@/components/Select';
 import { Colors } from '@/constants/Colors';
+import { Gender } from '@/enums/gender';
 import { Scale } from 'lucide-react-native';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface Step3Props {
     onSubmit: () => void;
@@ -27,40 +30,47 @@ export default function Step3({ onSubmit }: Step3Props) {
 
             <View style={styles.formContainer}>
                 <View style={styles.genderAgeContainer}>
-                    <Controller
-                        control={control}
-                        name="gender"
-                        render={({ field: { onChange, value }, fieldState }) => (
-                            <Input
-                                label="Genre"
-                                placeholder="Ex: Masculin"
-                                value={value}
-                                onChangeText={(text) => {
-                                    onChange(text);
-                                    if (fieldState.error) trigger('gender');
-                                }}
-                                error={fieldState.error?.message as string | undefined}
-                            />
-                        )}
-                    />
+                    <View style={{ flex: 1 }}>
+                        <Controller
+                            control={control}
+                            name="gender"
+                            render={({ field: { onChange, value }, fieldState }) => (
+                                <Select
+                                    label="Genre"
+                                    value={value}
+                                    placeholder="Choisir ton genre"
+                                    onChange={(val) => {
+                                        onChange(val);
+                                        if (fieldState.error) trigger('gender');
+                                    }}
+                                    options={[
+                                        { label: Gender.MONSIEUR, value: Gender.MONSIEUR },
+                                        { label: Gender.MADAME, value: Gender.MADAME },
+                                    ]}
+                                />
+                            )}
+                        />
+                    </View>
 
-                    <Controller
-                        control={control}
-                        name="age"
-                        render={({ field: { onChange, value }, fieldState }) => (
-                            <Input
-                                label="Âge"
-                                placeholder="Ex: 25"
-                                value={value}
-                                keyboardType="numeric"
-                                onChangeText={(text) => {
-                                    onChange(text);
-                                    if (fieldState.error) trigger('age');
-                                }}
-                                error={fieldState.error?.message as string | undefined}
-                            />
-                        )}
-                    />
+                    <View style={{ flex: 1 }}>
+                        <Controller
+                            control={control}
+                            name="age"
+                            render={({ field: { onChange, value }, fieldState }) => (
+                                <Input
+                                    label="Âge"
+                                    placeholder="Ex: 25"
+                                    value={value}
+                                    keyboardType="numeric"
+                                    onChangeText={(text) => {
+                                        onChange(text);
+                                        if (fieldState.error) trigger('age');
+                                    }}
+                                    error={fieldState.error?.message as string | undefined}
+                                />
+                            )}
+                        />
+                    </View>
                 </View>
 
                 <Controller
@@ -100,7 +110,7 @@ export default function Step3({ onSubmit }: Step3Props) {
                 />
             </View>
 
-            <Button title="Valider" onPress={onSubmit} />
+            <Button title="🎯 C'est parti !" onPress={onSubmit} />
         </Card>
     );
 }

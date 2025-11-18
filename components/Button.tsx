@@ -20,11 +20,9 @@ export default function Button({ title, onPress, style, isDisabled }: ButtonProp
 
 const styles = StyleSheet.create({
     pressable: {
-        marginTop: 40,
         width: '100%',
     },
     container: {
-        padding: 10,
         backgroundColor: Colors.primary,
         alignItems: 'center',
         borderRadius: 15,
