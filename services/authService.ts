@@ -39,7 +39,7 @@ export const authService = {
     },
 
     getMe: async (token: string): Promise<User> => {
-        const response = await fetch(`${API_URL}/users/me`, {
+        const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/me`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
