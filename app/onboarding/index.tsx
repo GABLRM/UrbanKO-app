@@ -4,7 +4,9 @@ import { OnboardingData, onboardingSchema } from '@/features/onboarding/schema';
 import Step1 from '@/features/onboarding/Step1';
 import Step2 from '@/features/onboarding/Step2';
 import Step3 from '@/features/onboarding/Step3';
+import { usePatchMe } from '@/hooks/usePatchMe';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -14,6 +16,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function OnboardingScreen() {
     const [step, setStep] = useState(1);
+
+    const router = useRouter();
+    const patchMeMutation = usePatchMe();
 
     const methods = useForm<OnboardingData>({
         resolver: zodResolver(onboardingSchema),
@@ -47,14 +52,21 @@ export default function OnboardingScreen() {
         if (!isValid) return;
 
         const data = methods.getValues();
-        const formdata = {
+        const payload = {
             ...data,
             age: Number(data.age),
             weight: Number(data.weight),
             height: Number(data.height),
         };
 
-        console.log('Submit final :', formdata);
+        patchMeMutation.mutate(payload, {
+            onSuccess: () => {
+                router.push('/');
+            },
+            onError: (error) => {
+                console.error('Failed to update user:', error);
+            },
+        });
     };
 
     const steps = [

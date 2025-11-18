@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserProvider } from '@/contexts/userContext';
+import AppGestureWrapper from '@/components/AppGestureWrapper';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -15,10 +16,12 @@ export default function RootLayout() {
     return (
         <QueryClientProvider client={queryClient}>
             <UserProvider>
-                <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="(auth)" />
-                </Stack>
+                <AppGestureWrapper>
+                    <Stack screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="index" />
+                        <Stack.Screen name="(auth)" />
+                    </Stack>
+                </AppGestureWrapper>
             </UserProvider>
         </QueryClientProvider>
     );
