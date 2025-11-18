@@ -1,9 +1,10 @@
+import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { Colors } from '@/constants/Colors';
 import { Disciplines } from '@/enums/disciplines';
 import { Dumbbell } from 'lucide-react-native';
 import { useController, useFormContext } from 'react-hook-form';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Step2Props {
     nextStep: () => void;
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
     buttonGroup: {
         width: '100%',
         marginTop: 10,
+        marginBottom: 10,
         gap: 5,
     },
     button: {

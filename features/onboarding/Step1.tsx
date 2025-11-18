@@ -1,9 +1,10 @@
+import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Input from '@/components/Input';
 import { Colors } from '@/constants/Colors';
 import { User } from 'lucide-react-native';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface Step1Props {
     nextStep: () => void;
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     formContainer: {
         width: '100%',
         marginTop: 10,
+        marginBottom: 10,
         gap: 5,
     },
     nicknameMaxLength: {

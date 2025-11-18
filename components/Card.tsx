@@ -16,6 +16,5 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: Colors.secondary,
         backgroundColor: Colors.card,
-        marginBottom: 20,
     },
 });
