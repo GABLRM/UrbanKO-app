@@ -1,7 +1,6 @@
-import { Link } from 'expo-router';
-import { Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import LandingPage from '@/components/LandingPage';
+import { Link } from 'expo-router';
+import { View } from 'react-native';
 
 const queryClient = new QueryClient({});
 
@@ -17,9 +16,10 @@ export default function Index() {
                     width: '100%',
                     justifyContent: 'center',
                     alignItems: 'center',
+                    gap: 20,
                 }}
             >
-                <LandingPage />
+                {/* <LandingPage /> */}
                 <Link
                     href={{
                         pathname: '/profile/[id]',
@@ -28,7 +28,8 @@ export default function Index() {
                 >
                     profile
                 </Link>
-                <Text>test</Text>
+                <Link href="/(auth)">auth</Link>
+                <Link href="/onboarding">onboarding</Link>
             </View>
         </QueryClientProvider>
     );
