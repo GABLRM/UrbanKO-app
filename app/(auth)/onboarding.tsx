@@ -13,9 +13,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '@/contexts/AuthenticationContext';
 
 export default function OnboardingScreen() {
     const [step, setStep] = useState(1);
+    const { refreshUser } = useAuth();
 
     const router = useRouter();
     const patchMeMutation = usePatchMe();
@@ -24,7 +26,7 @@ export default function OnboardingScreen() {
         resolver: zodResolver(onboardingSchema),
         mode: 'onSubmit',
         defaultValues: {
-            nickname: '',
+            username: '',
             disciplines: [],
             gender: Gender.MONSIEUR,
             age: '',
@@ -38,7 +40,7 @@ export default function OnboardingScreen() {
     const nextStep = async () => {
         let fieldsToValidate: (keyof OnboardingData)[] = [];
 
-        if (step === 1) fieldsToValidate = ['nickname'];
+        if (step === 1) fieldsToValidate = ['username'];
         if (step === 2) fieldsToValidate = ['disciplines'];
 
         const isValid = await methods.trigger(fieldsToValidate);
@@ -60,8 +62,9 @@ export default function OnboardingScreen() {
         };
 
         patchMeMutation.mutate(payload, {
-            onSuccess: () => {
-                router.push('/');
+            onSuccess: async () => {
+                await refreshUser();
+                router.push('/(app)/(tabs)');
             },
             onError: (error) => {
                 console.error('Failed to update user:', error);

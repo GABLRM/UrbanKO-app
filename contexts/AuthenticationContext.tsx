@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 return;
             }
 
-            const fetchedUser: User = await fetchUser(fetchedToken!);
+            const fetchedUser: User = await fetchUser(fetchedToken);
 
             if (!fetchedUser) {
                 throw new Error('No user data found');

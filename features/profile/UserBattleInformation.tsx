@@ -33,7 +33,7 @@ export default function UserBattleInformation({
                 <Text style={styles.battleInfoTitle}>Victoires</Text>
             </View>
             <View style={styles.battleInfoContainer}>
-                <Text style={styles.battleInfo}>{defeats}</Text>
+                <Text style={{ ...styles.battleInfo, color: '#ce2626' }}>{defeats}</Text>
                 <Text style={styles.battleInfoTitle}>Défaites</Text>
             </View>
         </View>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     battleInfo: {
         alignSelf: 'center',
         textAlign: 'center',
-        color: '#ce2626',
+        color: '#3b3fac',
         fontSize: 25,
     },
     battleInfoTitle: {

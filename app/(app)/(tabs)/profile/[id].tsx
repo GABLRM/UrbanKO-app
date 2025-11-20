@@ -6,38 +6,14 @@ import UserInformation from '@/features/profile/UserInformation';
 import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
 import User from '@/type/user';
+import { useAuth } from '@/contexts/AuthenticationContext';
 
 export default function Id() {
-    const [user, setUser] = useState<User | undefined>(undefined);
+    // const [user, setUser] = useState<User | undefined>(undefined);
     const { id }: { id: string } = useLocalSearchParams();
+    const { user } = useAuth();
 
-    //todo: get user info with useContext if self user
-    // const { user } = useUser()
-
-    const getUser = (): User => {
-        return {
-            _id: '1',
-            height: 170,
-            age: 22,
-            city: 'Bordeaux',
-            defeats: 6,
-            disciplines: ['mma', 'boxe', 'judo'],
-            email: 'pouet@email.com',
-            fights: 36,
-            gender: 'Homme',
-            image: '',
-            score: 1800,
-            username: 'tractosaurus',
-            weight: 55,
-            victories: 30,
-        };
-    };
-
-    useEffect(() => {
-        const user = getUser();
-
-        setUser(user);
-    }, [id]);
+    //todo: get user info if id !== user._id
 
     if (!user) {
         return <SafeAreaProvider />;

@@ -3,17 +3,19 @@ import { FontAwesome6 } from '@expo/vector-icons';
 
 type userInformationProps = {
     username: string;
-    city: string;
+    city?: string;
 };
 
 export default function UserInformation({ username, city }: userInformationProps) {
     return (
         <View style={styles.firstUserInfoContainer}>
             <Text style={styles.userName}>{username}</Text>
-            <View style={styles.cityContainer}>
-                <FontAwesome6 name="location-dot" size={20} color="grey" />
-                <Text style={styles.city}>{city}</Text>
-            </View>
+            {!!city && (
+                <View style={styles.cityContainer}>
+                    <FontAwesome6 name="location-dot" size={20} color="grey" />
+                    <Text style={styles.city}>{city}</Text>
+                </View>
+            )}
         </View>
     );
 }
