@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 type ChipProps = {
     text: string;
@@ -14,14 +15,14 @@ export default function Chip({ text }: ChipProps) {
 
 const styles = StyleSheet.create({
     chip: {
-        backgroundColor: '#4a2629',
-        borderColor: '#cb2626',
+        backgroundColor: Colors.chipRed,
+        borderColor: Colors.primary,
         borderRadius: 20,
         paddingVertical: 6,
         paddingHorizontal: 12,
     },
     text: {
-        color: '#db2626',
+        color: Colors.primary,
         fontWeight: 'bold',
     },
 });

@@ -79,7 +79,7 @@ export function Select({ label, value, onChange, options, placeholder }: SelectP
                                     setOpen(false);
                                 }}
                             >
-                                <Text>{opt.label}</Text>
+                                <Text style={{ color: Colors.white }}>{opt.label}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -91,7 +91,7 @@ export function Select({ label, value, onChange, options, placeholder }: SelectP
 
 const styles = StyleSheet.create({
     label: {
-        color: 'white',
+        color: Colors.white,
         fontSize: 16,
         fontWeight: '600',
         marginBottom: 5,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 15,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: Colors.customGrey,
         borderRadius: 15,
         backgroundColor: Colors.inputBackground,
         flexDirection: 'row',
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
     },
 
     dropdown: {
-        backgroundColor: '#FFF',
+        backgroundColor: Colors.inputBackground,
         borderRadius: 8,
         borderWidth: 1,
-        borderColor: '#DDD',
+        borderColor: Colors.customGrey,
         paddingVertical: 4,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 14,
         borderBottomWidth: 1,
-        borderBottomColor: '#EEE',
+        borderBottomColor: Colors.customGrey,
     },
 });

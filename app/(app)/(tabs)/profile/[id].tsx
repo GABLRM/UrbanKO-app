@@ -1,19 +1,23 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useEffect, useState } from 'react';
 import UserInformation from '@/features/profile/UserInformation';
 import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
-import User from '@/type/user';
 import { useAuth } from '@/contexts/AuthenticationContext';
+import { Colors } from '@/constants/Colors';
+import { useEffect } from 'react';
 
 export default function Id() {
-    // const [user, setUser] = useState<User | undefined>(undefined);
     const { id }: { id: string } = useLocalSearchParams();
     const { user } = useAuth();
 
-    //todo: get user info if id !== user._id
+    useEffect(() => {
+        if (id === user?._id) {
+            return;
+        }
+        //todo: get user info if id !== user._id
+    }, [id, user?._id]);
 
     if (!user) {
         return <SafeAreaProvider />;
@@ -47,7 +51,7 @@ export default function Id() {
                 />
                 <View style={styles.modifyProfileButtonContainer}>
                     <View style={styles.modifyProfileButton}>
-                        <Button title={'Modifier le profil'} color={'white'} />
+                        <Button title={'Modifier le profil'} color={Colors.white} />
                     </View>
                 </View>
             </ScrollView>
@@ -58,12 +62,12 @@ export default function Id() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        backgroundColor: '#1a1a1f',
+        backgroundColor: Colors.background,
     },
     header: {
         height: 150,
         width: '100%',
-        backgroundColor: '#ce2525',
+        backgroundColor: Colors.primary,
     },
     profilePicture: {
         width: 100,
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
         top: 105,
         left: 50,
         borderRadius: 100,
-        borderColor: 'black',
+        borderColor: Colors.black,
         borderWidth: 5,
         position: 'absolute',
     },
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     modifyProfileButton: {
-        backgroundColor: '#ce2525',
+        backgroundColor: Colors.primary,
         borderRadius: 10,
     },
 });

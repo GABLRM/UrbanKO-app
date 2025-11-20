@@ -6,4 +6,9 @@ export const Colors = {
     inputBackground: '#2d2d33',
     card: '#252529',
     white: '#ffffff',
+    battleInfo: '#c35e23',
+    customGrey: '#808995',
+    black: '#000000',
+    chipRed: '#4a2629',
+    green: '#01c851',
 };

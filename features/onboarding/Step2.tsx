@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: '600',
-        color: 'white',
+        color: Colors.white,
         textAlign: 'center',
     },
     description: {
@@ -104,5 +104,5 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     buttonSelected: { backgroundColor: Colors.primary },
-    error: { color: 'red', textAlign: 'center', marginTop: 10 },
+    error: { color: Colors.primary, textAlign: 'center', marginTop: 10 },
 });
