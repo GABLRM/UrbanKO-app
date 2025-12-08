@@ -1,7 +1,7 @@
-import { Redirect, Tabs } from 'expo-router';
-import { useAuth } from '@/contexts/AuthenticationContext';
-import { Map, Swords, Trophy, User } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/contexts/AuthenticationContext';
+import { Redirect, Tabs } from 'expo-router';
+import { Map, Swords, Trophy, User } from 'lucide-react-native';
 
 export default function TabsLayout() {
     const { user, isLoading } = useAuth();

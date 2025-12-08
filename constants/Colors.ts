@@ -6,6 +6,7 @@ export const Colors = {
     inputBackground: '#2d2d33',
     card: '#252529',
     white: '#ffffff',
+    gray: '#3a3a42',
     battleInfo: '#c35e23',
     customGrey: '#808995',
     black: '#000000',

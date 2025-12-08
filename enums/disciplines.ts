@@ -6,3 +6,7 @@ export enum Disciplines {
     STREET_FIGHTING = 'Combat de rue',
     TAEKWONDO = 'Taekwondo',
 }
+
+export function getDisciplineLabel(discipline: keyof typeof Disciplines): string {
+    return Disciplines[discipline];
+}

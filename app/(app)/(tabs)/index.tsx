@@ -1,5 +1,5 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
 import { useAuth } from '@/contexts/AuthenticationContext';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function TabsIndex() {
     const { logout } = useAuth();
