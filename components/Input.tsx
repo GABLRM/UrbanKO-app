@@ -18,6 +18,7 @@ type InputProps = {
     style?: StyleProp<ViewStyle>;
     secureTextEntry?: boolean;
     error?: string;
+    isNumber?: boolean;
 } & TextInputProps;
 
 export default function Input({
@@ -26,6 +27,7 @@ export default function Input({
     style,
     secureTextEntry,
     error,
+    isNumber,
     value,
     onChangeText,
     onBlur,
@@ -44,6 +46,7 @@ export default function Input({
                     value={value}
                     onChangeText={onChangeText}
                     onBlur={onBlur}
+                    keyboardType={isNumber ? 'numeric' : 'default'}
                 />
                 {secureTextEntry && (
                     <Pressable
@@ -65,7 +68,7 @@ export default function Input({
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%',
     },
     label: {
         color: Colors.white,

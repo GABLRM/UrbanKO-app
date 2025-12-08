@@ -1,7 +1,7 @@
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { Colors } from '@/constants/Colors';
-import { Disciplines } from '@/enums/disciplines';
+import { Discipline } from '@/enums/discipline';
 import { Dumbbell } from 'lucide-react-native';
 import { useController, useFormContext } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -22,9 +22,9 @@ export default function Step2({ nextStep }: Step2Props) {
         defaultValue: [],
     });
 
-    const toggleDiscipline = (discipline: string) => {
+    const toggleDiscipline = (discipline: Discipline) => {
         const updated = selected.includes(discipline)
-            ? selected.filter((d: string) => d !== discipline)
+            ? selected.filter((d: Discipline) => d !== discipline)
             : [...selected, discipline];
         onChange(updated);
 
@@ -45,15 +45,15 @@ export default function Step2({ nextStep }: Step2Props) {
             </View>
 
             <View style={styles.buttonGroup}>
-                {Object.entries(Disciplines).map(([key, value]) => (
+                {Object.values(Discipline).map((value) => (
                     <TouchableOpacity
-                        key={key}
-                        onPress={() => toggleDiscipline(key)}
-                        style={[styles.button, selected.includes(key) && styles.buttonSelected]}
+                        key={value}
+                        onPress={() => toggleDiscipline(value)}
+                        style={[styles.button, selected.includes(value) && styles.buttonSelected]}
                     >
                         <Text
                             style={{
-                                color: selected.includes(key) ? 'white' : Colors.secondary,
+                                color: selected.includes(value) ? 'white' : Colors.secondary,
                                 fontWeight: '600',
                             }}
                         >

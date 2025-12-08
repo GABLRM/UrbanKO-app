@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UserInformation from '@/features/profile/UserInformation';
@@ -6,16 +6,17 @@ import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
 import { useAuth } from '@/contexts/AuthenticationContext';
 import { Colors } from '@/constants/Colors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Id() {
+    const [isSelfProfile, setIsSelfProfile] = useState(false);
+    const router = useRouter();
+
     const { id }: { id: string } = useLocalSearchParams();
     const { user } = useAuth();
 
     useEffect(() => {
-        if (id === user?._id) {
-            return;
-        }
+        setIsSelfProfile(id === user?._id);
         //todo: get user info if id !== user._id
     }, [id, user?._id]);
 
@@ -49,11 +50,17 @@ export default function Id() {
                     weight={user.weight}
                     disciplines={user.disciplines}
                 />
-                <View style={styles.modifyProfileButtonContainer}>
-                    <View style={styles.modifyProfileButton}>
-                        <Button title={'Modifier le profil'} color={Colors.white} />
+                {isSelfProfile && (
+                    <View style={styles.modifyProfileButtonContainer}>
+                        <View style={styles.modifyProfileButton}>
+                            <Button
+                                title={'Modifier le profil'}
+                                color={Colors.white}
+                                onPress={() => router.push('/(app)/(modals)/profileEditionModal')}
+                            />
+                        </View>
                     </View>
-                </View>
+                )}
             </ScrollView>
         </SafeAreaProvider>
     );

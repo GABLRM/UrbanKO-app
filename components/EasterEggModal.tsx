@@ -1,20 +1,16 @@
 import { StyleSheet, Pressable, View, Modal, Text, Image } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { ModalProp } from '@/type/modalProp';
 
-type EasterEggProp = {
-    isVisible: boolean;
-    setIsVisible: (visible: boolean) => void;
-};
-
-export default function EasterEggModal(easterEggProp: EasterEggProp) {
+export default function EasterEggModal(modalProp: ModalProp) {
     return (
         <Modal
             animationType="slide"
             transparent={true}
-            visible={easterEggProp.isVisible}
+            visible={modalProp.isVisible}
             onRequestClose={() => {
-                easterEggProp.setIsVisible(!easterEggProp.isVisible);
+                modalProp.setIsVisible(!modalProp.isVisible);
             }}
         >
             <View style={styles.centeredView}>
@@ -22,7 +18,7 @@ export default function EasterEggModal(easterEggProp: EasterEggProp) {
                     <View style={styles.xButton}>
                         <Pressable
                             style={{ padding: 10 }}
-                            onPress={() => easterEggProp.setIsVisible(false)}
+                            onPress={() => modalProp.setIsVisible(false)}
                         >
                             <FontAwesome6 name="x" size={20} color={Colors.customGrey} />
                         </Pressable>
