@@ -7,4 +7,9 @@ export const Colors = {
     card: '#252529',
     white: '#ffffff',
     gray: '#3a3a42',
+    battleInfo: '#c35e23',
+    customGrey: '#808995',
+    black: '#000000',
+    chipRed: '#4a2629',
+    green: '#01c851',
 };

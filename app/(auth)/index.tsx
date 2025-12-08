@@ -200,10 +200,10 @@ const styles = StyleSheet.create({
         color: Colors.primary,
     },
     activeText: {
-        color: 'white',
+        color: Colors.white,
     },
     errorText: {
-        color: 'red',
+        color: Colors.primary,
         marginTop: 10,
         marginBottom: 10,
         textAlign: 'center',

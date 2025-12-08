@@ -6,7 +6,7 @@ type User = {
     gender: string;
     height: number;
     weight: number;
-    city: string;
+    city?: string;
     disciplines: string[];
     score: number;
     fights: number;

@@ -1,19 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { Colors } from '@/constants/Colors';
 
 type userInformationProps = {
     username: string;
-    city: string;
+    city?: string;
 };
 
 export default function UserInformation({ username, city }: userInformationProps) {
     return (
         <View style={styles.firstUserInfoContainer}>
             <Text style={styles.userName}>{username}</Text>
-            <View style={styles.cityContainer}>
-                <FontAwesome6 name="location-dot" size={20} color="grey" />
-                <Text style={styles.city}>{city}</Text>
-            </View>
+            {!!city && (
+                <View style={styles.cityContainer}>
+                    <FontAwesome6 name="location-dot" size={20} color={Colors.customGrey} />
+                    <Text style={styles.city}>{city}</Text>
+                </View>
+            )}
         </View>
     );
 }
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     userName: {
-        color: 'white',
+        color: Colors.white,
         fontSize: 25,
         paddingLeft: 15,
         width: '60%',
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     city: {
-        color: 'grey',
+        color: Colors.customGrey,
         fontSize: 15,
         paddingLeft: 5,
     },

@@ -29,7 +29,7 @@ export default function Step1({ nextStep }: Step1Props) {
             <View style={styles.formContainer}>
                 <Controller
                     control={control}
-                    name="nickname"
+                    name="username"
                     render={({ field: { onChange, onBlur, value }, fieldState }) => (
                         <>
                             <Input
@@ -40,7 +40,7 @@ export default function Step1({ nextStep }: Step1Props) {
                                 onChangeText={(text) => {
                                     onChange(text);
                                     if (fieldState.error) {
-                                        trigger('nickname');
+                                        trigger('username');
                                     }
                                 }}
                                 onBlur={() => {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: '600',
-        color: 'white',
+        color: Colors.white,
         textAlign: 'center',
     },
     description: {

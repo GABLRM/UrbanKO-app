@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     label: {
-        color: 'white',
+        color: Colors.white,
         fontSize: 16,
         fontWeight: '600',
         marginBottom: 5,
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingVertical: 15,
         paddingHorizontal: 10,
-        borderColor: 'gray',
+        borderColor: Colors.customGrey,
         borderWidth: 1,
         width: '100%',
         backgroundColor: Colors.inputBackground,
-        color: 'white',
+        color: Colors.white,
         fontSize: 18,
     },
     pressable: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         right: 10,
     },
     error: {
-        color: 'red',
+        color: Colors.primary,
         marginTop: 5,
     },
 });

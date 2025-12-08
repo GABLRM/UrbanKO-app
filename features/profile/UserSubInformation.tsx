@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import Chip from '@/components/Chip';
+import { Colors } from '@/constants/Colors';
 
 type userSubInformationProps = {
     gender: string;
@@ -22,7 +23,7 @@ export default function UserSubInformation({
             <View style={styles.subInfoContainer}>
                 <View style={styles.subInfoListContainer}>
                     <View style={styles.subInfoTitleContainer}>
-                        <FontAwesome6 name="bullseye" size={30} color="#ce2626" />
+                        <FontAwesome6 name="bullseye" size={30} color={Colors.primary} />
                         <Text style={styles.subInfoTitle}>Informations</Text>
                     </View>
                     <View style={styles.subInfoCategoryContainer}>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     },
     subInfoContainer: {
         borderStyle: 'solid',
-        borderColor: 'grey',
+        borderColor: Colors.customGrey,
         width: '100%',
         borderWidth: 1,
         borderRadius: 20,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     },
     subInfoTitle: {
         paddingLeft: 10,
-        color: '#ce2626',
+        color: Colors.primary,
         fontSize: 20,
     },
     subInfoCategoryContainer: {
@@ -97,12 +98,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     subInfoCategoryTitle: {
-        color: '#808995',
+        color: Colors.customGrey,
         fontSize: 18,
     },
     subInfoCategory: {
         paddingRight: 20,
-        color: 'white',
+        color: Colors.white,
         fontSize: 18,
     },
     subInfoChipList: {

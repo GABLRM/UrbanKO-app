@@ -1,5 +1,6 @@
 import { StyleSheet, Pressable, View, Modal, Text, Image } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { Colors } from '@/constants/Colors';
 
 type EasterEggProp = {
     isVisible: boolean;
@@ -23,7 +24,7 @@ export default function EasterEggModal(easterEggProp: EasterEggProp) {
                             style={{ padding: 10 }}
                             onPress={() => easterEggProp.setIsVisible(false)}
                         >
-                            <FontAwesome6 name="x" size={20} color="grey" />
+                            <FontAwesome6 name="x" size={20} color={Colors.customGrey} />
                         </Pressable>
                     </View>
                     <View style={styles.modalContent}>
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalView: {
-        backgroundColor: '#1a1a1f',
+        backgroundColor: Colors.background,
         borderRadius: 20,
         height: 350,
         width: 380,
@@ -64,14 +65,14 @@ const styles = StyleSheet.create({
     xButton: { alignItems: 'flex-end', width: '100%' },
     modalContent: { justifyContent: 'flex-end', alignItems: 'center' },
     textStyle: {
-        color: 'white',
+        color: Colors.white,
         fontWeight: 'bold',
     },
     modalText: {
         alignItems: 'flex-end',
         marginBottom: 15,
         textAlign: 'center',
-        color: 'red',
+        color: Colors.primary,
     },
     gif: { width: 350, height: 250, alignItems: 'center' },
 });

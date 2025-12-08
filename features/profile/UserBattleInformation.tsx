@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 type userBattleInformationProps = {
     score: number;
@@ -25,7 +26,7 @@ export default function UserBattleInformation({
                 <Text
                     style={{
                         ...styles.battleInfo,
-                        color: '#01c851',
+                        color: Colors.green,
                     }}
                 >
                     {victories}
@@ -33,7 +34,7 @@ export default function UserBattleInformation({
                 <Text style={styles.battleInfoTitle}>Victoires</Text>
             </View>
             <View style={styles.battleInfoContainer}>
-                <Text style={styles.battleInfo}>{defeats}</Text>
+                <Text style={{ ...styles.battleInfo, color: Colors.primary }}>{defeats}</Text>
                 <Text style={styles.battleInfoTitle}>Défaites</Text>
             </View>
         </View>
@@ -56,22 +57,22 @@ const styles = StyleSheet.create({
     battleInfoContainer: {
         width: '48%',
         height: '45%',
-        backgroundColor: '#252529',
+        backgroundColor: Colors.card,
         justifyContent: 'center',
         borderStyle: 'solid',
-        borderColor: 'grey',
+        borderColor: Colors.customGrey,
         borderWidth: 1,
         borderRadius: 20,
     },
     battleInfo: {
         alignSelf: 'center',
         textAlign: 'center',
-        color: '#ce2626',
+        color: Colors.battleInfo,
         fontSize: 25,
     },
     battleInfoTitle: {
         alignSelf: 'center',
         textAlign: 'center',
-        color: '#808995',
+        color: Colors.customGrey,
     },
 });

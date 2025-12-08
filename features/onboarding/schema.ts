@@ -3,7 +3,7 @@ import { Gender } from '@/enums/gender';
 import { z } from 'zod';
 
 export const onboardingSchema = z.object({
-    nickname: z
+    username: z
         .string()
         .min(3, 'Le pseudo doit contenir au moins 3 caractères')
         .max(20, 'Le pseudo ne peut pas dépasser 20 caractères'),
