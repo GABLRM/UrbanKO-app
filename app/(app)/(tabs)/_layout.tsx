@@ -55,9 +55,7 @@ export default function TabsLayout() {
                     title: 'Profil',
                     href: {
                         pathname: '/profile/[id]',
-                        params: {
-                            id: user._id,
-                        },
+                        params: { id: user._id },
                     },
                     tabBarIcon: ({ color }) => <User color={color} size={28} />,
                     tabBarLabelStyle: { fontSize: 14, marginTop: 5 },
