@@ -6,4 +6,5 @@ export const Colors = {
     inputBackground: '#2d2d33',
     card: '#252529',
     white: '#ffffff',
+    gray: '#3a3a42',
 };
