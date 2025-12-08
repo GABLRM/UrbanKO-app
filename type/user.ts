@@ -1,4 +1,4 @@
-import { Discipline } from '@/enums/discipline';
+import { Disciplines } from '@/enums/disciplines';
 import { Gender } from '@/enums/gender';
 
 type User = {
@@ -10,7 +10,7 @@ type User = {
     height: number;
     weight: number;
     city?: string;
-    disciplines: Discipline[];
+    disciplines: Disciplines[];
     score: number;
     fights: number;
     victories: number;

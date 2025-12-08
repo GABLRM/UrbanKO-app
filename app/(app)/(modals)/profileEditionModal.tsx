@@ -1,3 +1,13 @@
+import Input from '@/components/Input';
+import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/contexts/AuthenticationContext';
+import { Disciplines } from '@/enums/disciplines';
+import { usePatchMe } from '@/hooks/usePatchMe';
+import { ProfileEditionData, profileEditionSchema } from '@/schemas/profileEditionSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
     KeyboardAvoidingView,
     Modal,
@@ -7,16 +17,6 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { Colors } from '@/constants/Colors';
-import { useAuth } from '@/contexts/AuthenticationContext';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ProfileEditionData, profileEditionSchema } from '@/schemas/profileEditionSchema';
-import Input from '@/components/Input';
-import { useState } from 'react';
-import { Discipline } from '@/enums/discipline';
-import { usePatchMe } from '@/hooks/usePatchMe';
-import { useRouter } from 'expo-router';
 
 export default function ProfileEditionModal() {
     const [isLoading, setIsLoading] = useState(false);
@@ -177,7 +177,7 @@ export default function ProfileEditionModal() {
                                     <Text style={styles.label}>Disciplines</Text>
 
                                     <View style={styles.disciplinesInput}>
-                                        {Object.entries(Discipline).map(([key, enumValue]) => {
+                                        {Object.entries(Disciplines).map(([key, enumValue]) => {
                                             const isSelected = value.includes(enumValue);
                                             return (
                                                 <TouchableOpacity

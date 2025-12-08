@@ -1,9 +1,9 @@
-import { Stack } from 'expo-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppGestureWrapper from '@/components/AppGestureWrapper';
 import { AuthProvider } from '@/contexts/AuthenticationContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: 5 * 60 * 1000, // 5 minutes

@@ -6,10 +6,11 @@ interface QueryParams {
     cursor?: string;
 }
 
-export function useGetMatchmaking({ limit, cursor }: QueryParams = { limit: 10 }) {
+export function useGetMatchmaking({ limit = 10, cursor }: QueryParams = {}) {
     return useQuery({
         queryKey: ['matchmaking', { limit, cursor }],
         queryFn: async () => {
+            console.log('Fetching matchmaking data...');
             const token = await SecureStore.getItemAsync('token');
 
             const params = new URLSearchParams();

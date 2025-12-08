@@ -1,12 +1,12 @@
+import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/contexts/AuthenticationContext';
+import UserBattleInformation from '@/features/profile/UserBattleInformation';
+import UserInformation from '@/features/profile/UserInformation';
+import UserSubInformation from '@/features/profile/UserSubInformation';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import UserInformation from '@/features/profile/UserInformation';
-import UserBattleInformation from '@/features/profile/UserBattleInformation';
-import UserSubInformation from '@/features/profile/UserSubInformation';
-import { useAuth } from '@/contexts/AuthenticationContext';
-import { Colors } from '@/constants/Colors';
-import { useEffect, useState } from 'react';
 
 export default function Id() {
     const [isSelfProfile, setIsSelfProfile] = useState(false);

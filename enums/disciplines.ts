@@ -1,4 +1,4 @@
-export enum Discipline {
+export enum Disciplines {
     BOXING = 'Boxe',
     MMA = 'MMA',
     JUDO = 'Judo',

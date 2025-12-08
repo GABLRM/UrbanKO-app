@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { Discipline } from '@/enums/discipline';
+import { Disciplines } from '@/enums/disciplines';
 import { Gender } from '@/enums/gender';
+import { z } from 'zod';
 
 // Schéma pour login/signup
 export const profileEditionSchema = z.object({
@@ -9,7 +9,7 @@ export const profileEditionSchema = z.object({
         .min(3, 'Le pseudo doit contenir au moins 3 caractères')
         .max(20, 'Le pseudo ne peut pas dépasser 20 caractères'),
     disciplines: z
-        .array(z.nativeEnum(Discipline), { required_error: 'Le champs est requis' })
+        .array(z.nativeEnum(Disciplines), { required_error: 'Le champs est requis' })
         .min(1, 'Choisis au moins une discipline'),
     gender: z.nativeEnum(Gender, { required_error: 'Le champs est requis' }),
     age: z

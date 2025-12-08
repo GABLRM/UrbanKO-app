@@ -1,7 +1,8 @@
-import User from '@/type/user';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { queryClient } from '@/app/_layout';
 import { authService } from '@/services/authService';
+import User from '@/type/user';
+import * as SecureStore from 'expo-secure-store';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 type AuthContextType = {
     user: User | undefined;
@@ -70,6 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             await SecureStore.deleteItemAsync('token');
             setUser(undefined);
             setToken(null);
+            queryClient.clear();
         } catch (error) {
             console.error('Error during logout:', error);
         }
