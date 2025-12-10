@@ -20,7 +20,6 @@ export default function Id() {
 
     useEffect(() => {
         setIsSelfProfile(id === user?._id);
-        console.log('wesh ?', id === user?._id, id, user?._id);
     }, [id, user?._id]);
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export default function Id() {
                 console.error(error);
             },
         });
-    }, [id]);
+    }, [id, user?._id]);
 
     if (!user || !currentUser) {
         return <SafeAreaProvider />;
