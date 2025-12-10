@@ -9,21 +9,31 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
+    Alert,
     KeyboardAvoidingView,
+    Image,
     Modal,
     Platform,
+    Pressable,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { useUploadImage } from '@/hooks/useUploadImage';
+import { ImageInfo } from '@/type/imageInfo';
+import CameraModal from '@/components/CameraModal';
 
 export default function ProfileEditionModal() {
+    const [imageInfo, setImageInfo] = useState<ImageInfo | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const { user, refreshUser } = useAuth();
     const router = useRouter();
 
     const patchMeMutation = usePatchMe();
+    const uploadImageMutation = useUploadImage();
 
     const {
         control,
@@ -42,6 +52,41 @@ export default function ProfileEditionModal() {
         mode: 'onChange',
     });
 
+    const uploadImage = (data: ProfileEditionData, imageInfo: ImageInfo) => {
+        const uploadImageData = { userId: user!._id, imageInfo };
+        uploadImageMutation.mutate(uploadImageData, {
+            onSuccess: (imageUrl) => {
+                patchMe(data, imageUrl);
+            },
+            onError: (error) => {
+                console.error('Failed to update user:', error);
+                setIsLoading(false);
+                router.back();
+            },
+        });
+    };
+
+    const patchMe = (data: ProfileEditionData, imageUrl?: string) => {
+        const payload = { ...data };
+
+        if (imageUrl) {
+            payload.image = imageUrl;
+        }
+
+        patchMeMutation.mutate(payload, {
+            onSuccess: async () => {
+                await refreshUser();
+                setIsLoading(false);
+                router.navigate(`/(app)/(tabs)/profile/${user!._id}`);
+            },
+            onError: (error) => {
+                console.error('Failed to update user:', error);
+                setIsLoading(false);
+                router.back();
+            },
+        });
+    };
+
     const onSave = (data: ProfileEditionData) => {
         if (Object.values(errors).length) {
             return;
@@ -49,17 +94,41 @@ export default function ProfileEditionModal() {
 
         setIsLoading(true);
 
-        patchMeMutation.mutate(data, {
-            onSuccess: async () => {
-                await refreshUser();
-                setIsLoading(false);
-                router.navigate('/(app)/(tabs)/profile/[id]');
-            },
-            onError: (error) => {
-                console.error('Failed to update user:', error);
-                setIsLoading(false);
-                router.back();
-            },
+        if (imageInfo) {
+            uploadImage(data, imageInfo);
+
+            return;
+        }
+
+        patchMe(data);
+    };
+
+    const pickImage = async () => {
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (!permissionResult.granted) {
+            Alert.alert(
+                'Permission required',
+                'Permission to access the media library is required.',
+            );
+            return;
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (result.canceled) {
+            return;
+        }
+
+        setImageInfo({
+            uri: result.assets[0].uri,
+            name: result.assets[0].fileName ?? '',
+            mimetype: result.assets[0].mimeType ?? '',
         });
     };
 
@@ -88,6 +157,21 @@ export default function ProfileEditionModal() {
                     </View>
 
                     <View style={styles.form}>
+                        <Text style={styles.label}>Photo de profile</Text>
+                        <View style={{ ...styles.modalHeader, marginBottom: 10 }}>
+                            <Pressable
+                                style={styles.cameraButton}
+                                onPress={() => setIsVisible(true)}
+                            >
+                                <Text style={{ ...styles.label, marginBottom: 0 }}>Camera</Text>
+                            </Pressable>
+                            {!!imageInfo?.uri && (
+                                <Image source={{ uri: imageInfo.uri }} width={100} height={100} />
+                            )}
+                            <Pressable style={styles.cameraButton} onPress={() => pickImage()}>
+                                <Text style={{ ...styles.label, marginBottom: 0 }}>Galerie</Text>
+                            </Pressable>
+                        </View>
                         <Controller
                             control={control}
                             name="username"
@@ -225,6 +309,11 @@ export default function ProfileEditionModal() {
                         )}
                     </View>
                 </KeyboardAvoidingView>
+                <CameraModal
+                    isVisible={isVisible}
+                    setIsVisible={setIsVisible}
+                    setImageInfo={setImageInfo}
+                />
             </Modal>
         </View>
     );
@@ -247,6 +336,7 @@ const styles = StyleSheet.create({
     modalHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: 30,
     },
     closeText: {
@@ -256,6 +346,16 @@ const styles = StyleSheet.create({
     saveText: {
         fontSize: 18,
         color: Colors.primary,
+    },
+    cameraButton: {
+        backgroundColor: Colors.inputBackground,
+        width: 100,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        borderColor: Colors.customGrey,
+        borderWidth: 1,
     },
     form: {
         flex: 1,

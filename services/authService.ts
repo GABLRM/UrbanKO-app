@@ -53,6 +53,7 @@ export const authService = {
         }
 
         const json = await response.json();
+        console.log('jssssssson', json);
         return json as User;
     },
 };
