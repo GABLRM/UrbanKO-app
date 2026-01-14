@@ -52,8 +52,6 @@ export const authService = {
             throw new Error(error.message || "Erreur lors de la récupération de l'utilisateur");
         }
 
-        const json = await response.json();
-        console.log('jssssssson', json);
-        return json as User;
+        return response.json();
     },
 };

@@ -2,9 +2,10 @@ import Chip from '@/components/Chip';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
+import { Gender } from '@/enums/gender';
 
 type userSubInformationProps = {
-    gender: string;
+    gender: Gender;
     age: number;
     height: number;
     weight: number;
@@ -18,6 +19,16 @@ export default function UserSubInformation({
     height,
     disciplines,
 }: userSubInformationProps) {
+    const getUserGender = () => {
+        switch (gender) {
+            case Gender.FEMALE:
+                return 'Femme';
+            case Gender.MALE:
+                return 'Monsieur';
+            default:
+                return 'Autre';
+        }
+    };
     return (
         <View style={styles.subInfo}>
             <View style={styles.subInfoContainer}>
@@ -28,7 +39,7 @@ export default function UserSubInformation({
                     </View>
                     <View style={styles.subInfoCategoryContainer}>
                         <Text style={styles.subInfoCategoryTitle}>Sexe</Text>
-                        <Text style={styles.subInfoCategory}>{gender}</Text>
+                        <Text style={styles.subInfoCategory}>{getUserGender()}</Text>
                     </View>
                     <View style={styles.subInfoCategoryContainer}>
                         <Text style={styles.subInfoCategoryTitle}>Âge</Text>
@@ -50,9 +61,21 @@ export default function UserSubInformation({
                     >
                         <Text style={styles.subInfoCategoryTitle}>Discipline</Text>
                         <View style={styles.subInfoChipList}>
-                            {disciplines.map((discipline) => (
-                                <Chip text={discipline} key={discipline} />
-                            ))}
+                            {disciplines?.length ? (
+                                disciplines.map((discipline) => (
+                                    <Chip text={discipline} key={discipline} />
+                                ))
+                            ) : (
+                                <Text
+                                    style={{
+                                        ...styles.subInfoCategory,
+                                        alignSelf: 'flex-end',
+                                        textAlign: 'right',
+                                    }}
+                                >
+                                    Aucune discipline sélectionnée
+                                </Text>
+                            )}
                         </View>
                     </View>
                 </View>

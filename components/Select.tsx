@@ -19,13 +19,14 @@ interface Options {
 
 interface SelectProps {
     label?: string;
+    labelValue?: string;
     value?: string;
-    onChange: (value: string) => void;
+    onChange: (value: string, label?: string) => void;
     options: Options[];
     placeholder?: string;
 }
 
-export function Select({ label, value, onChange, options, placeholder }: SelectProps) {
+export function Select({ label, labelValue, value, onChange, options, placeholder }: SelectProps) {
     const [open, setOpen] = useState(false);
     const [layout, setLayout] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
@@ -49,7 +50,7 @@ export function Select({ label, value, onChange, options, placeholder }: SelectP
 
                 <Pressable style={styles.select} onPress={openDropdown}>
                     <Text style={styles.valueText} numberOfLines={1}>
-                        {value || placeholder || 'Sélectionner...'}
+                        {labelValue || value || placeholder || 'Sélectionner...'}
                     </Text>
 
                     <Ionicons name="chevron-down" size={20} color="#444" />
@@ -75,7 +76,7 @@ export function Select({ label, value, onChange, options, placeholder }: SelectP
                                 key={opt.value}
                                 style={styles.option}
                                 onPress={() => {
-                                    onChange(opt.value);
+                                    onChange(opt.value, opt.label);
                                     setOpen(false);
                                 }}
                             >
