@@ -3,25 +3,44 @@ import { useAuth } from '@/contexts/AuthenticationContext';
 import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserInformation from '@/features/profile/UserInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useGetUser } from '@/hooks/useGetUser';
+import User from '@/type/user';
 
 export default function Id() {
-    const [isSelfProfile, setIsSelfProfile] = useState(false);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const router = useRouter();
-
     const { id }: { id: string } = useLocalSearchParams();
     const { user } = useAuth();
+    const [isSelfProfile, setIsSelfProfile] = useState(false);
+    const getUserMutation = useGetUser();
 
     useEffect(() => {
         setIsSelfProfile(id === user?._id);
-        //todo: get user info if id !== user._id
+    }, [id, user?._id]);
+
+    useEffect(() => {
+        if (id === user?._id) {
+            setCurrentUser(user);
+
+            return;
+        }
+
+        getUserMutation.mutate(id, {
+            onSuccess: (user: User) => {
+                setCurrentUser(user);
+            },
+            onError: (error: Error) => {
+                console.error(error);
+            },
+        });
     }, [id, user?._id]);
 
     if (!user) {
-        return <SafeAreaProvider />;
+        return <Redirect href={'/(auth)'} />;
     }
 
     return (
@@ -29,7 +48,7 @@ export default function Id() {
             <View style={styles.header} />
             <Image
                 source={
-                    user?.image
+                    user.image
                         ? { uri: user.image }
                         : require('../../../../assets/images/favicon.png')
                 }

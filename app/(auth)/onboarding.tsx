@@ -28,7 +28,7 @@ export default function OnboardingScreen() {
         defaultValues: {
             username: '',
             disciplines: [],
-            gender: Gender.MONSIEUR,
+            gender: Gender.MALE,
             age: '',
             weight: '',
             height: '',

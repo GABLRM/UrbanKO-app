@@ -1,6 +1,6 @@
+import PageHeader from '@/components/PageHeader';
 import { Colors } from '@/constants/Colors';
 import MatchmakingChoice from '@/features/matchmaking/MatchmakingChoice';
-import MatchmakingHeader from '@/features/matchmaking/MatchmakingHeader';
 import MatchStack from '@/features/matchmaking/MatchStack';
 import MatchSuccess from '@/features/matchmaking/MatchSuccess';
 import { useGetMatchmaking } from '@/hooks/useGetMatchmaking';
@@ -58,7 +58,7 @@ export default function MatchPage() {
     return (
         <View style={styles.container}>
             <SafeAreaView>
-                <MatchmakingHeader />
+                <PageHeader title="💥 Matchmaking" subtitle="Swipe pour trouver ton adversaire" />
             </SafeAreaView>
 
             <MatchSuccess visible={showMatch} onHide={() => setShowMatch(false)} />

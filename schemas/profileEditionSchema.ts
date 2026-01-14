@@ -8,6 +8,7 @@ export const profileEditionSchema = z.object({
         .string({ required_error: 'Le champs est requis' })
         .min(3, 'Le pseudo doit contenir au moins 3 caractères')
         .max(20, 'Le pseudo ne peut pas dépasser 20 caractères'),
+    image: z.string().optional(),
     disciplines: z
         .array(z.nativeEnum(Disciplines), { required_error: 'Le champs est requis' })
         .min(1, 'Choisis au moins une discipline'),
