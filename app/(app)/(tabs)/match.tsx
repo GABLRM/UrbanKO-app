@@ -7,7 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MatchPage() {
-    const { data, isLoading } = useGetMatchmaking();
+    const { data } = useGetMatchmaking();
 
     const opponent = data?.results[0];
 
