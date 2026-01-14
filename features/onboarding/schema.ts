@@ -1,6 +1,6 @@
 import { Disciplines } from '@/enums/disciplines';
-import { Gender } from '@/enums/gender';
 import { z } from 'zod';
+import { Gender } from '@/enums/gender';
 
 export const onboardingSchema = z.object({
     username: z

@@ -1,4 +1,4 @@
-import { queryClient } from '@/app/_layout';
+import { queryClient } from '@/lib/queryClient';
 import { authService } from '@/services/authService';
 import User from '@/type/user';
 import * as SecureStore from 'expo-secure-store';

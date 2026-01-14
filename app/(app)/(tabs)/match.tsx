@@ -1,10 +1,10 @@
 import { Colors } from '@/constants/Colors';
 import MatchmakingChoice from '@/features/matchmaking/MatchmakingChoice';
-import MatchmakingHeader from '@/features/matchmaking/MatchmakingHeader';
 import MatchmakingOpponentCard from '@/features/matchmaking/MatchmakingOpponentCard';
 import { useGetMatchmaking } from '@/hooks/useGetMatchmaking';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import PageHeader from '@/components/PageHeader';
 
 export default function MatchPage() {
     const { data } = useGetMatchmaking();
@@ -14,7 +14,7 @@ export default function MatchPage() {
     return (
         <View style={styles.container}>
             <SafeAreaView>
-                <MatchmakingHeader />
+                <PageHeader title="💥 Matchmaking" subtitle="Swipe pour trouver ton adversaire" />
             </SafeAreaView>
 
             <View style={styles.opponentContainer}>

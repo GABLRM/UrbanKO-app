@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthenticationContext';
 import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserInformation from '@/features/profile/UserInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -39,8 +39,8 @@ export default function Id() {
         });
     }, [id, user?._id]);
 
-    if (!user || !currentUser) {
-        return <SafeAreaProvider />;
+    if (!user) {
+        return <Redirect href={'/(auth)'} />;
     }
 
     return (
