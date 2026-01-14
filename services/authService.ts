@@ -56,4 +56,22 @@ export const authService = {
         console.log('jssssssson', json);
         return json as User;
     },
+
+    getUserById: async (id: string, token: string): Promise<User> => {
+        const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Erreur lors de la récupération de l'utilisateur");
+        }
+
+        const json = await response.json();
+        return json as User;
+    },
 };

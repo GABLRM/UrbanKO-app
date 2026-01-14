@@ -6,6 +6,7 @@ import RankingCard from '@/features/ranking/RankingCard';
 import { Disciplines } from '@/enums/disciplines';
 import { useState } from 'react';
 import { useRanking } from '@/hooks/useRanking';
+import { useRouter } from 'expo-router';
 
 const disciplineFilters = [
     { label: 'Tous', value: null },
@@ -20,6 +21,8 @@ const disciplineFilters = [
 export default function RankingPage() {
     const [selectedDiscipline, setSelectedDiscipline] = useState<Disciplines | null>(null);
     const { data: users, isLoading, error } = useRanking(selectedDiscipline);
+
+    const router = useRouter();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -73,7 +76,12 @@ export default function RankingPage() {
                     </View>
                 ) : (
                     users.map((user, index) => (
-                        <RankingCard key={user._id} user={user} rank={index + 1} />
+                        <RankingCard
+                            key={user._id}
+                            user={user}
+                            rank={index + 1}
+                            onPress={() => router.push(`/(app)/(tabs)/ranking/user/${user._id}`)}
+                        />
                     ))
                 )}
             </ScrollView>

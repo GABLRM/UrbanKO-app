@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { Award, Crown, Medal, Trophy } from 'lucide-react-native';
 import User from '@/type/user';
@@ -6,6 +6,7 @@ import User from '@/type/user';
 type RankingCardProps = {
     user: User;
     rank: number;
+    onPress: () => void;
 };
 
 const getRankIcon = (rank: number) => {
@@ -21,9 +22,9 @@ const getRankIcon = (rank: number) => {
     }
 };
 
-export default function RankingCard({ user, rank }: RankingCardProps) {
+export default function RankingCard({ user, rank, onPress }: RankingCardProps) {
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={onPress}>
             {getRankIcon(rank)}
             <Image
                 style={styles.picture}
@@ -50,7 +51,7 @@ export default function RankingCard({ user, rank }: RankingCardProps) {
                 </View>
             </View>
             <Text style={styles.userScore}>{user.score}</Text>
-        </View>
+        </Pressable>
     );
 }
 
