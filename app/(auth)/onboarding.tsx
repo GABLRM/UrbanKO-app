@@ -22,19 +22,6 @@ export default function OnboardingScreen() {
     const router = useRouter();
     const patchMeMutation = usePatchMe();
 
-    const getGenderForAPI = (gender: string): 'male' | 'female' | 'other' => {
-        switch (gender) {
-            case Gender.MONSIEUR:
-                return 'male';
-            case Gender.MADAME:
-                return 'female';
-            case Gender.OTHER:
-                return 'other';
-            default:
-                return 'male';
-        }
-    };
-
     const methods = useForm<OnboardingData>({
         resolver: zodResolver(onboardingSchema),
         mode: 'onSubmit',
@@ -69,7 +56,6 @@ export default function OnboardingScreen() {
         const data = methods.getValues();
         const payload = {
             ...data,
-            gender: getGenderForAPI(data.gender),
             age: Number(data.age),
             weight: Number(data.weight),
             height: Number(data.height),
