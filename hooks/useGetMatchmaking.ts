@@ -6,7 +6,7 @@ interface QueryParams {
     cursor?: string;
 }
 
-export function useGetMatchmaking({ limit = 10, cursor }: QueryParams = {}) {
+export function useGetMatchmaking({ limit = 2, cursor }: QueryParams = {}) {
     return useQuery({
         queryKey: ['matchmaking', { limit, cursor }],
         queryFn: async () => {

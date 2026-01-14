@@ -1,15 +1,59 @@
 import { Colors } from '@/constants/Colors';
 import MatchmakingChoice from '@/features/matchmaking/MatchmakingChoice';
 import MatchmakingHeader from '@/features/matchmaking/MatchmakingHeader';
-import MatchmakingOpponentCard from '@/features/matchmaking/MatchmakingOpponentCard';
+import MatchStack from '@/features/matchmaking/MatchStack';
+import MatchSuccess from '@/features/matchmaking/MatchSuccess';
 import { useGetMatchmaking } from '@/hooks/useGetMatchmaking';
-import { StyleSheet, View } from 'react-native';
+import { useSwipe } from '@/hooks/useSwipe';
+import User from '@/type/user';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MatchPage() {
-    const { data, isLoading } = useGetMatchmaking();
+    const [cursor, setCursor] = useState<string | undefined>(undefined);
+    const { data, isLoading, refetch, isFetching } = useGetMatchmaking({ cursor });
+    const [opponents, setOpponents] = useState<User[]>(data?.results || []);
+    const [showMatch, setShowMatch] = useState(false);
 
-    const opponent = data?.results[0];
+    const { mutate: swipe } = useSwipe();
+
+    useEffect(() => {
+        if (data?.results) {
+            setOpponents((prev) => [...prev, ...data.results]);
+        }
+    }, [data]);
+
+    const prefetchIfNeeded = () => {
+        if (opponents.length <= 2 && data?.nextCursor && !isFetching) {
+            setCursor(data.nextCursor);
+            refetch();
+        }
+    };
+
+    const handleNextOpponent = () => {
+        setOpponents((prev) => prev.slice(1));
+        prefetchIfNeeded();
+    };
+
+    const handleLike = () => {
+        swipe(
+            { targetId: opponents[0]?._id, action: 'fight' },
+            {
+                onSuccess: (response) => {
+                    if (response.match) {
+                        setShowMatch(true);
+                    }
+                },
+            },
+        );
+        handleNextOpponent();
+    };
+
+    const handleDislike = () => {
+        swipe({ targetId: opponents[0]?._id, action: 'flee' });
+        handleNextOpponent();
+    };
 
     return (
         <View style={styles.container}>
@@ -17,13 +61,29 @@ export default function MatchPage() {
                 <MatchmakingHeader />
             </SafeAreaView>
 
-            <View style={styles.opponentContainer}>
-                <MatchmakingOpponentCard opponent={opponent} />
-            </View>
+            <MatchSuccess visible={showMatch} onHide={() => setShowMatch(false)} />
 
-            <View style={styles.choiceContainer}>
-                <MatchmakingChoice />
-            </View>
+            {!opponents.length && !isLoading ? (
+                <View style={styles.noOpponents}>
+                    <Text style={{ color: Colors.secondary, fontSize: 18, fontWeight: 'bold' }}>
+                        Aucun adversaire disponible
+                    </Text>
+                </View>
+            ) : (
+                <>
+                    <View style={styles.opponentContainer}>
+                        <MatchStack
+                            opponents={opponents}
+                            onLike={handleLike}
+                            onDislike={handleDislike}
+                        />
+                    </View>
+
+                    <View style={styles.choiceContainer}>
+                        <MatchmakingChoice onLike={handleLike} onDislike={handleDislike} />
+                    </View>
+                </>
+            )}
         </View>
     );
 }
@@ -36,8 +96,13 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 
+    noOpponents: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     opponentContainer: {
-        flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,

@@ -22,9 +22,9 @@ export default function Step2({ nextStep }: Step2Props) {
         defaultValue: [],
     });
 
-    const toggleDiscipline = (discipline: Disciplines) => {
+    const toggleDiscipline = (discipline: keyof typeof Disciplines) => {
         const updated = selected.includes(discipline)
-            ? selected.filter((d: Disciplines) => d !== discipline)
+            ? selected.filter((d: keyof typeof Disciplines) => d !== discipline)
             : [...selected, discipline];
         onChange(updated);
 
@@ -45,15 +45,15 @@ export default function Step2({ nextStep }: Step2Props) {
             </View>
 
             <View style={styles.buttonGroup}>
-                {Object.values(Disciplines).map((value) => (
+                {Object.entries(Disciplines).map(([key, value]) => (
                     <TouchableOpacity
-                        key={value}
-                        onPress={() => toggleDiscipline(value)}
-                        style={[styles.button, selected.includes(value) && styles.buttonSelected]}
+                        key={key}
+                        onPress={() => toggleDiscipline(key as keyof typeof Disciplines)}
+                        style={[styles.button, selected.includes(key) && styles.buttonSelected]}
                     >
                         <Text
                             style={{
-                                color: selected.includes(value) ? 'white' : Colors.secondary,
+                                color: selected.includes(key) ? 'white' : Colors.secondary,
                                 fontWeight: '600',
                             }}
                         >

@@ -14,7 +14,7 @@ export default function MatchmakingOpponentCard({ opponent }: MatchmakingOpponen
         <Card style={styles.card}>
             <ImageBackground
                 source={{
-                    uri: 'https://pvtistes.net/forum/attachments/la-demande-de-pvt-canada-351/21739d1393069621-photos-didentite-demande-de-permis-eic-pvt-jp-etc-photo-identite.jpg',
+                    uri: opponent?.image,
                 }}
                 style={styles.image}
                 imageStyle={styles.imageRounded}
