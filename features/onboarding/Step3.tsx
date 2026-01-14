@@ -7,12 +7,14 @@ import { Gender } from '@/enums/gender';
 import { Scale } from 'lucide-react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
 
 interface Step3Props {
     onSubmit: () => void;
 }
 
 export default function Step3({ onSubmit }: Step3Props) {
+    const [labelValue, setLabelValue] = useState<string | undefined>('Monsieur');
     const { control, trigger } = useFormContext();
 
     return (
@@ -37,15 +39,18 @@ export default function Step3({ onSubmit }: Step3Props) {
                             render={({ field: { onChange, value }, fieldState }) => (
                                 <Select
                                     label="Genre"
+                                    labelValue={labelValue}
                                     value={value}
                                     placeholder="Choisir ton genre"
-                                    onChange={(val) => {
+                                    onChange={(val, label) => {
+                                        setLabelValue(label);
                                         onChange(val);
                                         if (fieldState.error) trigger('gender');
                                     }}
                                     options={[
-                                        { label: Gender.MONSIEUR, value: Gender.MONSIEUR },
-                                        { label: Gender.MADAME, value: Gender.MADAME },
+                                        { label: 'Monsieur', value: Gender.MALE },
+                                        { label: 'Femme', value: Gender.FEMALE },
+                                        { label: 'Autre', value: Gender.OTHER },
                                     ]}
                                 />
                             )}
