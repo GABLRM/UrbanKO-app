@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Gender } from '@/enums/gender';
 
 type userSubInformationProps = {
-    gender: Gender;
+    gender: string;
     age: number;
     height: number;
     weight: number;
