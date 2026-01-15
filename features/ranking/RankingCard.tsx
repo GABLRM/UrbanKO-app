@@ -28,7 +28,9 @@ export default function RankingCard({ user, rank, onPress }: RankingCardProps) {
             {getRankIcon(rank)}
             <Image
                 style={styles.picture}
-                source={user.image ? { uri: user.image } : require('@/assets/images/favicon.png')}
+                source={
+                    user.image ? { uri: user.image } : require('@/assets/images/default-avatar.jpg')
+                }
                 width={40}
                 height={40}
             />

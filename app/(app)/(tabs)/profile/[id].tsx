@@ -9,13 +9,13 @@ import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ChevronLeft } from 'lucide-react-native';
+import { ChevronLeft, LogOut } from 'lucide-react-native';
 
 export default function Id() {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const router = useRouter();
     const { id }: { id: string } = useLocalSearchParams();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const [isSelfProfile, setIsSelfProfile] = useState(false);
     const getUserMutation = useGetUser();
 
@@ -65,12 +65,17 @@ export default function Id() {
                 ) : (
                     <View />
                 )}
+                <View style={styles.logOutButton}>
+                    <Pressable style={styles.backButton} onPress={() => logout()}>
+                        <LogOut color={Colors.white} size={32} />
+                    </Pressable>
+                </View>
             </View>
             <Image
                 source={
                     currentUser.image
                         ? { uri: currentUser.image }
-                        : require('../../../../assets/images/favicon.png')
+                        : require('@/assets/images/default-avatar.jpg')
                 }
                 style={styles.profilePicture}
             />
@@ -124,6 +129,10 @@ const styles = StyleSheet.create({
         height: 44,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    logOutButton: {
+        alignSelf: 'flex-end',
+        paddingRight: 10,
     },
     profilePicture: {
         width: 100,

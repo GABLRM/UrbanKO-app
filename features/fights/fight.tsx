@@ -99,7 +99,7 @@ export default function FightComponent({
                         source={
                             fight.contestant1.image
                                 ? { uri: fight.contestant1.image }
-                                : require('../../assets/images/favicon.png')
+                                : require('@/assets/images/default-avatar.jpg')
                         }
                         style={styles.profilePicture}
                     />
@@ -116,7 +116,7 @@ export default function FightComponent({
                         source={
                             fight.contestant2.image
                                 ? { uri: fight.contestant2.image }
-                                : require('../../assets/images/favicon.png')
+                                : require('@/assets/images/default-avatar.jpg')
                         }
                         style={styles.profilePicture}
                     />
