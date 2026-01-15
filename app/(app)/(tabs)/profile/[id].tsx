@@ -7,8 +7,9 @@ import { useGetUser } from '@/hooks/useGetUser';
 import User from '@/type/user';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Button, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ChevronLeft } from 'lucide-react-native';
 
 export default function Id() {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -53,7 +54,18 @@ export default function Id() {
 
     return (
         <SafeAreaProvider style={styles.container}>
-            <View style={styles.header} />
+            <View style={styles.header}>
+                {!isSelfProfile ? (
+                    <Pressable
+                        style={styles.backButton}
+                        onPress={() => router.push('/(app)/(tabs)/ranking')}
+                    >
+                        <ChevronLeft color={Colors.white} size={32} />
+                    </Pressable>
+                ) : (
+                    <View />
+                )}
+            </View>
             <Image
                 source={
                     currentUser.image
@@ -95,13 +107,23 @@ export default function Id() {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
+        flex: 1,
         backgroundColor: Colors.background,
     },
     header: {
         height: 150,
         width: '100%',
         backgroundColor: Colors.primary,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingTop: 60,
+        paddingLeft: 10,
+    },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     profilePicture: {
         width: 100,
