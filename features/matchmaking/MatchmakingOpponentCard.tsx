@@ -1,6 +1,5 @@
 import Card from '@/components/Card';
 import { Colors } from '@/constants/Colors';
-import { Disciplines, getDisciplineLabel } from '@/enums/disciplines';
 import User from '@/type/user';
 import { hexWithOpacity } from '@/utils/colorsUtils';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
@@ -13,9 +12,11 @@ export default function MatchmakingOpponentCard({ opponent }: MatchmakingOpponen
     return (
         <Card style={styles.card}>
             <ImageBackground
-                source={{
-                    uri: opponent?.image,
-                }}
+                source={
+                    opponent?.image
+                        ? { uri: opponent.image }
+                        : require('@/assets/images/favicon.png')
+                }
                 style={styles.image}
                 imageStyle={styles.imageRounded}
             >
@@ -25,16 +26,13 @@ export default function MatchmakingOpponentCard({ opponent }: MatchmakingOpponen
                     </Text>
 
                     <View style={styles.specialtyBadgesContainer}>
-                        {opponent?.disciplines?.map((discipline) => {
-                            const d = discipline as keyof typeof Disciplines;
-                            return (
-                                <View key={d} style={styles.specialtyBadge}>
-                                    <Text style={{ color: Colors.primary, fontWeight: '600' }}>
-                                        {getDisciplineLabel(d)}
-                                    </Text>
-                                </View>
-                            );
-                        })}
+                        {opponent?.disciplines?.map((discipline, index) => (
+                            <View key={index} style={styles.specialtyBadge}>
+                                <Text style={{ color: Colors.primary, fontWeight: '600' }}>
+                                    {discipline}
+                                </Text>
+                            </View>
+                        ))}
                     </View>
 
                     <View style={styles.badgesRow}>

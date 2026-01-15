@@ -1,7 +1,7 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import { Award, Crown, Medal, Trophy } from 'lucide-react-native';
 import User from '@/type/user';
+import { Award, Crown, Medal, Trophy } from 'lucide-react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 type RankingCardProps = {
     user: User;
@@ -28,11 +28,7 @@ export default function RankingCard({ user, rank, onPress }: RankingCardProps) {
             {getRankIcon(rank)}
             <Image
                 style={styles.picture}
-                source={
-                    user.image
-                        ? { uri: user.image }
-                        : require('@/assets/images/android-icon-foreground.png')
-                }
+                source={user.image ? { uri: user.image } : require('@/assets/images/favicon.png')}
                 width={40}
                 height={40}
             />
