@@ -12,4 +12,5 @@ export const Colors = {
     black: '#000000',
     chipRed: '#4a2629',
     green: '#01c851',
+    darkBlue: '#102B49FF',
 };

@@ -58,7 +58,7 @@ export default function MatchSuccess({ visible, onHide }: MatchSuccessProps) {
                 <Animated.View style={[styles.centered, containerStyle]}>
                     <Animated.Text style={[styles.emoji, emojiStyle]}>🥊</Animated.Text>
 
-                    <Text style={styles.title}>IT'S A FIGHT!</Text>
+                    <Text style={styles.title}>IT&#39;S A FIGHT!</Text>
                     <Text style={styles.subtitle}>Un combat va bientôt être organisé 🔥</Text>
                 </Animated.View>
             </BlurView>

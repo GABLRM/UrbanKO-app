@@ -34,9 +34,8 @@ export default function Index() {
             // Connexion
             login.mutate(data, {
                 onSuccess: async () => {
-                    console.log('Connexion réussie !', data);
                     await refreshUser();
-                    router.replace('/(app)/(tabs)');
+                    router.replace('/(app)/(tabs)/schedule');
                 },
                 onError: (error) => {
                     console.error('Erreur lors de la connexion', error);
@@ -46,7 +45,6 @@ export default function Index() {
             // Inscription
             signup.mutate(data, {
                 onSuccess: async () => {
-                    console.log('Inscription réussie !', data);
                     await refreshUser();
                     router.replace('/(auth)/onboarding');
                 },

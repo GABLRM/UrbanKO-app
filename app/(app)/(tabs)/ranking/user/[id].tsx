@@ -60,7 +60,7 @@ export default function RankingUserProfile() {
                 source={
                     profileUser?.image
                         ? { uri: profileUser.image }
-                        : require('../../../../../assets/images/favicon.png')
+                        : require('@/assets/images/default-avatar.jpg')
                 }
                 style={styles.profilePicture}
             />

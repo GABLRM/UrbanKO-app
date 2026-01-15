@@ -15,7 +15,7 @@ export default function MatchmakingOpponentCard({ opponent }: MatchmakingOpponen
                 source={
                     opponent?.image
                         ? { uri: opponent.image }
-                        : require('@/assets/images/favicon.png')
+                        : require('@/assets/images/default-avatar.jpg')
                 }
                 style={styles.image}
                 imageStyle={styles.imageRounded}

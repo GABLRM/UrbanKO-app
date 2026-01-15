@@ -7,14 +7,15 @@ import { useGetUser } from '@/hooks/useGetUser';
 import User from '@/type/user';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Button, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ChevronLeft, LogOut } from 'lucide-react-native';
 
 export default function Id() {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const router = useRouter();
     const { id }: { id: string } = useLocalSearchParams();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const [isSelfProfile, setIsSelfProfile] = useState(false);
     const getUserMutation = useGetUser();
 
@@ -23,6 +24,10 @@ export default function Id() {
     }, [id, user?._id]);
 
     useEffect(() => {
+        if (!id && !currentUser) {
+            return;
+        }
+
         if (id === user?._id) {
             setCurrentUser(user);
 
@@ -43,31 +48,51 @@ export default function Id() {
         return <Redirect href={'/(auth)'} />;
     }
 
+    if (!currentUser) {
+        return <View />;
+    }
+
     return (
         <SafeAreaProvider style={styles.container}>
-            <View style={styles.header} />
+            <View style={styles.header}>
+                {!isSelfProfile ? (
+                    <Pressable
+                        style={styles.backButton}
+                        onPress={() => router.push('/(app)/(tabs)/ranking')}
+                    >
+                        <ChevronLeft color={Colors.white} size={32} />
+                    </Pressable>
+                ) : (
+                    <View />
+                )}
+                <View style={styles.logOutButton}>
+                    <Pressable style={styles.backButton} onPress={() => logout()}>
+                        <LogOut color={Colors.white} size={32} />
+                    </Pressable>
+                </View>
+            </View>
             <Image
                 source={
-                    user.image
-                        ? { uri: user.image }
-                        : require('../../../../assets/images/favicon.png')
+                    currentUser.image
+                        ? { uri: currentUser.image }
+                        : require('@/assets/images/default-avatar.jpg')
                 }
                 style={styles.profilePicture}
             />
             <View style={{ height: 70 }} />
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-                <UserInformation username={user.username} city={user.city} />
+                <UserInformation username={currentUser.username} city={currentUser.city} />
                 <UserBattleInformation
-                    score={user.score}
-                    victories={user.victories}
-                    defeats={user.defeats}
+                    score={currentUser.score}
+                    victories={currentUser.victories}
+                    defeats={currentUser.defeats}
                 />
                 <UserSubInformation
-                    gender={user.gender}
-                    age={user.age}
-                    height={user.height}
-                    weight={user.weight}
-                    disciplines={user.disciplines}
+                    gender={currentUser.gender}
+                    age={currentUser.age}
+                    height={currentUser.height}
+                    weight={currentUser.weight}
+                    disciplines={currentUser.disciplines}
                 />
                 {isSelfProfile && (
                     <View style={styles.modifyProfileButtonContainer}>
@@ -87,13 +112,27 @@ export default function Id() {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
+        flex: 1,
         backgroundColor: Colors.background,
     },
     header: {
         height: 150,
         width: '100%',
         backgroundColor: Colors.primary,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingTop: 60,
+        paddingLeft: 10,
+    },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logOutButton: {
+        alignSelf: 'flex-end',
+        paddingRight: 10,
     },
     profilePicture: {
         width: 100,
