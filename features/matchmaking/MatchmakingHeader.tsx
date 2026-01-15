@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.card,
         borderBottomColor: Colors.secondary,
         borderBottomWidth: 0.5,
-        marginBottom: 20,
     },
 
     headerTitle: {

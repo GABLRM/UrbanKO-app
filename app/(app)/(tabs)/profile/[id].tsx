@@ -3,12 +3,12 @@ import { useAuth } from '@/contexts/AuthenticationContext';
 import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserInformation from '@/features/profile/UserInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
+import { useGetUser } from '@/hooks/useGetUser';
+import User from '@/type/user';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useGetUser } from '@/hooks/useGetUser';
-import User from '@/type/user';
 
 export default function Id() {
     const [currentUser, setCurrentUser] = useState<User | null>(null);

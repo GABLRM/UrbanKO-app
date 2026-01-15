@@ -2,13 +2,18 @@ import { Colors } from '@/constants/Colors';
 import { Flame, X } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-export default function MatchmakingChoice() {
+interface MatchmakingChoiceProps {
+    onLike: () => void;
+    onDislike: () => void;
+}
+
+export default function MatchmakingChoice({ onLike, onDislike }: MatchmakingChoiceProps) {
     return (
         <View style={styles.choiceContainer}>
-            <Pressable onPress={() => console.log('refuse')} style={styles.refusalChoice}>
+            <Pressable onPress={onDislike} style={styles.refusalChoice}>
                 <X size={36} color={Colors.primary} />
             </Pressable>
-            <Pressable onPress={() => console.log('accept')} style={styles.acceptChoice}>
+            <Pressable onPress={onLike} style={styles.acceptChoice}>
                 <Flame size={36} color={Colors.white} />
             </Pressable>
         </View>
