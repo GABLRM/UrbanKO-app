@@ -1,7 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import { useAuth } from '@/contexts/AuthenticationContext';
 import { Redirect, Tabs } from 'expo-router';
-import { Map, Swords, Trophy, User } from 'lucide-react-native';
+import { CalendarDays, Swords, Trophy, User } from 'lucide-react-native';
 
 export default function TabsLayout() {
     const { user, isLoading } = useAuth();
@@ -26,10 +26,10 @@ export default function TabsLayout() {
             }}
         >
             <Tabs.Screen
-                name="index"
+                name="schedule"
                 options={{
-                    title: 'Map',
-                    tabBarIcon: ({ color }) => <Map color={color} size={28} />,
+                    title: 'Schedule',
+                    tabBarIcon: ({ color }) => <CalendarDays color={color} size={28} />,
                     tabBarLabelStyle: { fontSize: 14, marginTop: 5 },
                 }}
             />

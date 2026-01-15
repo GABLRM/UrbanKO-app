@@ -10,7 +10,6 @@ export function useGetMatchmaking({ limit = 2, cursor }: QueryParams = {}) {
     return useQuery({
         queryKey: ['matchmaking', { limit, cursor }],
         queryFn: async () => {
-            console.log('Fetching matchmaking data...');
             const token = await SecureStore.getItemAsync('token');
 
             const params = new URLSearchParams();

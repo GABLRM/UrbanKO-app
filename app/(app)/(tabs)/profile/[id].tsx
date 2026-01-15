@@ -23,6 +23,10 @@ export default function Id() {
     }, [id, user?._id]);
 
     useEffect(() => {
+        if (!id && !currentUser) {
+            return;
+        }
+
         if (id === user?._id) {
             setCurrentUser(user);
 
@@ -43,31 +47,35 @@ export default function Id() {
         return <Redirect href={'/(auth)'} />;
     }
 
+    if (!currentUser) {
+        return <View />;
+    }
+
     return (
         <SafeAreaProvider style={styles.container}>
             <View style={styles.header} />
             <Image
                 source={
-                    user.image
-                        ? { uri: user.image }
+                    currentUser.image
+                        ? { uri: currentUser.image }
                         : require('../../../../assets/images/favicon.png')
                 }
                 style={styles.profilePicture}
             />
             <View style={{ height: 70 }} />
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-                <UserInformation username={user.username} city={user.city} />
+                <UserInformation username={currentUser.username} city={currentUser.city} />
                 <UserBattleInformation
-                    score={user.score}
-                    victories={user.victories}
-                    defeats={user.defeats}
+                    score={currentUser.score}
+                    victories={currentUser.victories}
+                    defeats={currentUser.defeats}
                 />
                 <UserSubInformation
-                    gender={user.gender}
-                    age={user.age}
-                    height={user.height}
-                    weight={user.weight}
-                    disciplines={user.disciplines}
+                    gender={currentUser.gender}
+                    age={currentUser.age}
+                    height={currentUser.height}
+                    weight={currentUser.weight}
+                    disciplines={currentUser.disciplines}
                 />
                 {isSelfProfile && (
                     <View style={styles.modifyProfileButtonContainer}>

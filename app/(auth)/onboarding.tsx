@@ -64,7 +64,7 @@ export default function OnboardingScreen() {
         patchMeMutation.mutate(payload, {
             onSuccess: async () => {
                 await refreshUser();
-                router.push('/(app)/(tabs)');
+                router.push('/(app)/(tabs)/schedule');
             },
             onError: (error) => {
                 console.error('Failed to update user:', error);
