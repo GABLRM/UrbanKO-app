@@ -16,6 +16,7 @@ import {
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useUserById } from '@/hooks/useUserById';
 import { ChevronLeft } from 'lucide-react-native';
+import { useRanking } from '@/hooks/useRanking';
 
 export default function RankingUserProfile() {
     const router = useRouter();
@@ -23,6 +24,11 @@ export default function RankingUserProfile() {
     const { user: currentUser } = useAuth();
 
     const { data: profileUser, isLoading, error } = useUserById(id);
+    const { data: rankingUsers } = useRanking();
+
+    // Trouver le rang de l'utilisateur dans le classement global
+    const userRank = rankingUsers?.findIndex((user) => user._id === id);
+    const rank = userRank !== undefined && userRank !== -1 ? userRank + 1 : '-';
 
     if (!currentUser) {
         return <Redirect href={'/(auth)'} />;
@@ -71,6 +77,7 @@ export default function RankingUserProfile() {
                     score={profileUser.score}
                     victories={profileUser.victories}
                     defeats={profileUser.defeats}
+                    ranking={rank}
                 />
                 <UserSubInformation
                     gender={profileUser.gender}
