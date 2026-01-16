@@ -4,6 +4,7 @@ import UserBattleInformation from '@/features/profile/UserBattleInformation';
 import UserInformation from '@/features/profile/UserInformation';
 import UserSubInformation from '@/features/profile/UserSubInformation';
 import { useGetUser } from '@/hooks/useGetUser';
+import { useMyRank } from '@/hooks/useRanking';
 import User from '@/type/user';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -18,6 +19,7 @@ export default function Id() {
     const { user, logout } = useAuth();
     const [isSelfProfile, setIsSelfProfile] = useState(false);
     const getUserMutation = useGetUser();
+    const { data } = useMyRank();
 
     useEffect(() => {
         setIsSelfProfile(id === user?._id);
@@ -84,6 +86,7 @@ export default function Id() {
                 <UserInformation username={currentUser.username} city={currentUser.city} />
                 <UserBattleInformation
                     score={currentUser.score}
+                    ranking={data ? data.rank : '-'}
                     victories={currentUser.victories}
                     defeats={currentUser.defeats}
                 />

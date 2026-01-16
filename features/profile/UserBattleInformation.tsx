@@ -5,12 +5,14 @@ type userBattleInformationProps = {
     score: number;
     victories: number;
     defeats: number;
+    ranking: number | string;
 };
 
 export default function UserBattleInformation({
     score,
     victories,
     defeats,
+    ranking,
 }: userBattleInformationProps) {
     return (
         <View style={styles.battleInfoListContainer}>
@@ -19,7 +21,7 @@ export default function UserBattleInformation({
                 <Text style={styles.battleInfoTitle}>Points</Text>
             </View>
             <View style={styles.battleInfoContainer}>
-                <Text style={styles.battleInfo}>#12</Text>
+                <Text style={styles.battleInfo}>{ranking ?? '-'}</Text>
                 <Text style={styles.battleInfoTitle}>Classement</Text>
             </View>
             <View style={styles.battleInfoContainer}>

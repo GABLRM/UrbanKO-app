@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react-native';
-import { useRanking } from '@/hooks/useRanking';
+import { useRanking, useMyRank } from '@/hooks/useRanking';
 import * as SecureStore from 'expo-secure-store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
@@ -110,5 +110,71 @@ describe('useRanking', () => {
 
         await waitFor(() => expect(result.current.isError).toBe(true));
         expect(result.current.error).toEqual(new Error('Server error'));
+    });
+});
+
+describe('useMyRank', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        global.fetch = jest.fn();
+    });
+
+    it('should fetch user rank successfully', async () => {
+        const mockToken = 'test-token';
+        const mockMyRankData = {
+            user: {
+                _id: '6968cb67ee5491c6c535d407',
+                username: 'Test2',
+                score: 0,
+                image: '',
+                disciplines: ['Boxe'],
+                victories: 0,
+                defeats: 0,
+            },
+            rank: 1,
+            totalUsers: 6,
+            percentile: 100,
+        };
+
+        (SecureStore.getItemAsync as jest.Mock).mockResolvedValue(mockToken);
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: true,
+            json: async () => mockMyRankData,
+        });
+
+        const { result } = renderHook(() => useMyRank(), {
+            wrapper: createWrapper(),
+        });
+
+        await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+        expect(result.current.data).toEqual(mockMyRankData);
+        expect(global.fetch).toHaveBeenCalledWith(
+            'http://localhost:3000/ranking/me',
+            expect.objectContaining({
+                method: 'GET',
+                headers: expect.objectContaining({
+                    Authorization: 'Bearer test-token',
+                }),
+            }),
+        );
+    });
+
+    it('should handle error when fetching user rank fails', async () => {
+        const mockToken = 'test-token';
+
+        (SecureStore.getItemAsync as jest.Mock).mockResolvedValue(mockToken);
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: false,
+            status: 404,
+            text: async () => 'User not found',
+        });
+
+        const { result } = renderHook(() => useMyRank(), {
+            wrapper: createWrapper(),
+        });
+
+        await waitFor(() => expect(result.current.isError).toBe(true));
+        expect(result.current.error?.message).toContain('404');
     });
 });
