@@ -86,7 +86,7 @@ export default function Id() {
                 <UserInformation username={currentUser.username} city={currentUser.city} />
                 <UserBattleInformation
                     score={currentUser.score}
-                    ranking={data ? data.rank: '-'}
+                    ranking={data ? data.rank : '-'}
                     victories={currentUser.victories}
                     defeats={currentUser.defeats}
                 />

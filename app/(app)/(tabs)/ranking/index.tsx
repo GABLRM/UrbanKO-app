@@ -82,7 +82,7 @@ export default function RankingPage() {
                             rank={index + 1}
                             onPress={() =>
                                 router.push({
-                                    pathname: `/(app)/(tabs)/profile/[id]`,
+                                    pathname: `/(app)/(tabs)/ranking/user/[id]`,
                                     params: { id: user._id },
                                 })
                             }
